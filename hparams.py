@@ -12,3 +12,24 @@ class hparams:
     rescaling = False
     rescaling_max = 0.999
     allow_clipping_in_normalization = True
+
+    max_iters=200
+    griffin_lim_iters=60
+    power=1.5        
+
+    # preprocessing parameters
+    min_text = 20
+
+    # general parameters
+    language = "en"
+
+    # trainig paremeters
+    replace_pronunciation_prob = 0.5
+    outputs_per_step = 1
+    batch_size = 60
+    batch_split = int(batch_size*0.5)
+    epochs = 2000
+    guided_attention_ratio = 0.995
+    teacher_forcing_ratio = 0.5
+    attention_scale = 20
+    attention_decay = 0.995
