@@ -24,12 +24,12 @@ class hparams:
     language = "en"
 
     # trainig paremeters
-    replace_pronunciation_prob = 0.5
-    outputs_per_step = 1
+    replace_pronunciation_prob = 1.0
+    outputs_per_step = 5
     batch_size = 60
     batch_split = int(batch_size*0.5)
     epochs = 2000
     guided_attention_ratio = 0.995
     teacher_forcing_ratio = 0.5
-    attention_scale = 20
-    attention_decay = 0.995
+    attention_scale = 15
+    attention_decay = 0.997
