@@ -55,10 +55,24 @@ def _lws_processor():
     return lws.lws(hparams.fft_size, hparams.hop_size, mode="speech")
 
 
-# Conversions:
+def inv_mel_spectrogram(mel_spectrogram):
+    D = _denormalize(mel_spectrogram)
+    S = _mel_to_linear(_db_to_amp(D + hparams.ref_level_db))  # Convert back to linear
+    processor = _lws_processor()
+    D = processor.run_lws(S.astype(np.float64).T ** hparams.power)
+    y = processor.istft(D).astype(np.float32)
+    return inv_preemphasis(y)
 
 
 _mel_basis = None
+
+_inv_mel_basis = None
+
+def _mel_to_linear(mel_spectrogram):
+	global _inv_mel_basis
+	if _inv_mel_basis is None:
+		_inv_mel_basis = np.linalg.pinv(_build_mel_basis())
+	return np.maximum(1e-10, np.dot(_inv_mel_basis, mel_spectrogram))
 
 
 def _linear_to_mel(spectrogram):
